@@ -45,7 +45,7 @@ export const portfolioData = {
     {
       title: "XENON",
       description: "A high-performance single-page application (SPA) focused on modern layout architecture, optimized asset delivery, and engaging user interfaces.",
-      image: "/hero-code.png",
+      image: "/xenon-shot.png",
       problem: "Modern SPAs often suffer from layout shifts and slow initial loads when dealing with heavy visual assets and complex grid systems.",
       solution: "Leveraged advanced CSS Grid techniques and asset optimization pipelines to create a rock-solid layout that remains performant across all device types.",
       techStack: ["React", "Tailwind CSS", "Responsive Design"],
@@ -54,7 +54,7 @@ export const portfolioData = {
     {
       title: "Ramadan Reveal",
       description: "An event-driven time tracking application featuring real-time date manipulation, dynamic intervals, and a culturally tailored user interface.",
-      image: "/microclimate-shot.png",
+      image: "/ramadan-shot.png",
       problem: "Standard time-tracking tools lack the cultural context and specific interval logic required for religious observances like Ramadan.",
       solution: "Developed a specialized engine for real-time date manipulation and dynamic countdowns, wrapped in a UI that respects and enhances the user's cultural experience.",
       techStack: ["React", "Tailwind CSS", "State Management"],

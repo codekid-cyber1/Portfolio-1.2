@@ -14,7 +14,7 @@ export const Projects = () => {
   return (
     <section id="projects" className="py-20 bg-[#0B0714]">
       <div className="container px-4 mx-auto">
-        <motion.div 
+        <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -36,8 +36,8 @@ export const Projects = () => {
               initial={{ opacity: 0, y: 30, scale: 0.95 }}
               whileInView={{ opacity: 1, y: 0, scale: 1 }}
               viewport={{ once: true, margin: "-100px" }}
-              transition={{ 
-                duration: 0.6, 
+              transition={{
+                duration: 0.6,
                 delay: index * 0.1,
                 ease: [0.21, 0.47, 0.32, 0.98]
               }}
@@ -50,6 +50,7 @@ export const Projects = () => {
                     fill
                     className="object-cover transition-transform duration-500 group-hover:scale-110"
                     referrerPolicy="no-referrer"
+                    unoptimized={true}
                   />
                 </div>
                 <CardHeader>
@@ -61,7 +62,7 @@ export const Projects = () => {
                   <CardDescription className="text-purple-200/60 leading-relaxed mb-4">
                     {project.description}
                   </CardDescription>
-                  
+
                   <div className="space-y-4 mb-6">
                     <div>
                       <h4 className="text-[10px] uppercase tracking-wider font-bold text-purple-500/60 mb-1">Problem</h4>
