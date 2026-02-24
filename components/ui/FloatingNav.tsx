@@ -61,7 +61,7 @@ export const FloatingNav = () => {
           damping: 20,
         }}
         className={cn(
-          "flex max-w-fit fixed top-10 inset-x-0 mx-auto border border-white/10 dark:border-white/10 rounded-full bg-white/70 dark:bg-zinc-950/70 backdrop-blur-md shadow-[0px_2px_3px_-1px_rgba(0,0,0,0.1),0px_1px_0px_0px_rgba(25,28,33,0.02),0px_0px_0px_1px_rgba(25,28,33,0.08)] z-[5000] pr-2 pl-8 py-2 items-center justify-center space-x-4"
+          "flex max-w-fit fixed top-10 inset-x-0 mx-auto border border-purple-500/20 rounded-full bg-[#130d26]/80 backdrop-blur-md shadow-[0px_2px_3px_-1px_rgba(0,0,0,0.1),0px_1px_0px_0px_rgba(25,28,33,0.02),0px_0px_0px_1px_rgba(25,28,33,0.08)] z-[5000] pr-2 pl-8 py-2 items-center justify-center space-x-4"
         )}
       >
         {navItems.map((navItem: any, idx: number) => (
@@ -70,7 +70,7 @@ export const FloatingNav = () => {
             href={navItem.link}
             onClick={(e) => handleScroll(e, navItem.link)}
             className={cn(
-              "relative dark:text-zinc-50 items-center flex space-x-1 text-zinc-600 dark:hover:text-zinc-300 hover:text-zinc-900 transition-colors"
+              "relative text-purple-200/70 items-center flex space-x-1 hover:text-purple-400 transition-colors"
             )}
           >
             <span className="block sm:hidden">{navItem.icon}</span>
@@ -80,10 +80,10 @@ export const FloatingNav = () => {
         <a 
           href="/Abdulmujeeb_Awodi_CV.pdf" 
           download 
-          className="group relative inline-flex items-center justify-center px-6 py-2 font-medium text-white transition-all duration-200 bg-zinc-900 rounded-full hover:bg-zinc-800 dark:bg-zinc-50 dark:text-zinc-900 dark:hover:bg-zinc-200"
+          className="group relative inline-flex items-center justify-center px-6 py-2 font-medium text-white transition-all duration-200 bg-gradient-to-r from-purple-700 to-purple-500 rounded-full hover:from-purple-600 hover:to-purple-400"
         >
           <span className="relative z-10">Hire Me</span>
-          <span className="absolute inset-0 rounded-full bg-zinc-900/20 dark:bg-zinc-50/20 blur-md group-hover:blur-lg transition-all opacity-0 group-hover:opacity-100" />
+          <span className="absolute inset-0 rounded-full bg-purple-500/20 blur-md group-hover:blur-lg transition-all opacity-0 group-hover:opacity-100" />
         </a>
       </motion.div>
     </AnimatePresence>

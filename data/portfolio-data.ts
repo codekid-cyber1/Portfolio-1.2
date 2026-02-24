@@ -27,6 +27,7 @@ export const portfolioData = {
     {
       title: "Microclimate",
       description: "A real-time environmental data visualization application, focusing on fast API integrations and clean data presentation.",
+      image: "/microclimate-shot.png",
       problem: "Environmental data is often fragmented and difficult to interpret in real-time, making it hard for users to monitor local conditions effectively.",
       solution: "Built a unified dashboard that aggregates multiple data streams into intuitive visualizations, providing instant insights into micro-environmental changes.",
       techStack: ["React", "API Integration", "Tailwind CSS"],
@@ -35,6 +36,7 @@ export const portfolioData = {
     {
       title: "Netflix Architecture Clone",
       description: "A complex media catalog interface demonstrating advanced state management, dynamic API data fetching, and scalable component architecture.",
+      image: "/netflix-shot.png",
       problem: "Building a high-performance media catalog requires handling large datasets and complex state transitions without sacrificing UI responsiveness.",
       solution: "Implemented an optimized state management strategy and lazy-loading patterns to ensure smooth navigation and instant content updates across thousands of titles.",
       techStack: ["React", "API Integration", "State Management"],
@@ -43,6 +45,7 @@ export const portfolioData = {
     {
       title: "XENON",
       description: "A high-performance single-page application (SPA) focused on modern layout architecture, optimized asset delivery, and engaging user interfaces.",
+      image: "/hero-code.png",
       problem: "Modern SPAs often suffer from layout shifts and slow initial loads when dealing with heavy visual assets and complex grid systems.",
       solution: "Leveraged advanced CSS Grid techniques and asset optimization pipelines to create a rock-solid layout that remains performant across all device types.",
       techStack: ["React", "Tailwind CSS", "Responsive Design"],
@@ -51,6 +54,7 @@ export const portfolioData = {
     {
       title: "Ramadan Reveal",
       description: "An event-driven time tracking application featuring real-time date manipulation, dynamic intervals, and a culturally tailored user interface.",
+      image: "/microclimate-shot.png",
       problem: "Standard time-tracking tools lack the cultural context and specific interval logic required for religious observances like Ramadan.",
       solution: "Developed a specialized engine for real-time date manipulation and dynamic countdowns, wrapped in a UI that respects and enhances the user's cultural experience.",
       techStack: ["React", "Tailwind CSS", "State Management"],
