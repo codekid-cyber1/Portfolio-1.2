@@ -34,7 +34,7 @@ export const Hero = () => {
 
             <div className="flex flex-wrap gap-4 items-center">
               <Button size="lg" className="rounded-full bg-gradient-to-r from-purple-700 to-purple-500 hover:from-purple-600 hover:to-purple-400 shadow-lg shadow-purple-500/20" asChild>
-                <a href="/Awodi_CV.pdf" download>
+                <a href="/cv.pdf" download>
                   <Download className="mr-2 h-4 w-4" />
                   Download CV
                 </a>
