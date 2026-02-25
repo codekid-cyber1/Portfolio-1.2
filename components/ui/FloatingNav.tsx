@@ -12,7 +12,7 @@ export const FloatingNav = () => {
 
   useMotionValueEvent(scrollY, "change", (current) => {
     if (typeof current !== "number") return;
-    
+
     const direction = current - lastScrollY;
 
     if (current < 50) {
@@ -77,9 +77,9 @@ export const FloatingNav = () => {
             <span className="hidden sm:block text-sm font-medium">{navItem.name}</span>
           </a>
         ))}
-        <a 
-          href="/Abdulmujeeb_Awodi_CV.pdf" 
-          download 
+        <a
+          href="/cv.pdf"
+          download
           className="group relative inline-flex items-center justify-center px-6 py-2 font-medium text-white transition-all duration-200 bg-gradient-to-r from-purple-700 to-purple-500 rounded-full hover:from-purple-600 hover:to-purple-400"
         >
           <span className="relative z-10">Hire Me</span>
