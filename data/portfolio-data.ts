@@ -21,7 +21,7 @@ export const portfolioData = {
   skills: [
     { category: "Frontend", items: ["React", "Next.js", "Tailwind CSS", "TypeScript"] },
     { category: "Core Engineering", items: ["State Management", "API Integration", "Data Visualization"] },
-    { category: "Tools & Workflow", items: ["Git", "GitHub", "Vercel", "Figma", "VS Code", "Antigravity"] }
+    { category: "Tools & Workflow", items: ["Git", "GitHub", "Vercel", "Figma", "VS Code", "Firebase"] }
   ],
   projects: [
     {
