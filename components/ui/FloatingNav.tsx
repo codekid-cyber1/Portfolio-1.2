@@ -4,6 +4,7 @@ import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence, useScroll, useMotionValueEvent } from "motion/react";
 import { cn } from "@/lib/utils";
 import { User, Briefcase, FileText, Mail, Home } from "lucide-react";
+import Link from "next/link";
 
 export const FloatingNav = () => {
   const { scrollY } = useScroll();
@@ -28,7 +29,7 @@ export const FloatingNav = () => {
   });
 
   const navItems = [
-    { name: "Home", link: "#home", icon: <Home className="h-4 w-4" /> },
+    { name: "Home", link: "#", icon: <Home className="h-4 w-4" /> },
     { name: "About", link: "#about", icon: <User className="h-4 w-4" /> },
     { name: "Projects", link: "#projects", icon: <Briefcase className="h-4 w-4" /> },
     { name: "Resume", link: "#resume", icon: <FileText className="h-4 w-4" /> },
@@ -65,7 +66,7 @@ export const FloatingNav = () => {
         )}
       >
         {navItems.map((navItem: any, idx: number) => (
-          <a
+          <Link
             key={`link=${idx}`}
             href={navItem.link}
             onClick={(e) => handleScroll(e, navItem.link)}
@@ -75,7 +76,7 @@ export const FloatingNav = () => {
           >
             <span className="block sm:hidden">{navItem.icon}</span>
             <span className="hidden sm:block text-sm font-medium">{navItem.name}</span>
-          </a>
+          </Link>
         ))}
         <a
           href="/cv.pdf"

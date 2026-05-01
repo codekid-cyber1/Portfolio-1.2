@@ -4,9 +4,10 @@ import { motion } from "motion/react";
 import { portfolioData } from "@/data/portfolio-data";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/Card";
 import { Badge } from "@/components/ui/Badge";
-import { ExternalLink, Github } from "lucide-react";
+import { ChevronRight, ExternalLink, Github } from "lucide-react";
 import { Button } from "@/components/ui/Button";
 import Image from "next/image";
+import Link from "next/link";
 
 export const Projects = () => {
   const { projects } = portfolioData;
@@ -19,14 +20,21 @@ export const Projects = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.5 }}
-          className="mb-12"
+          className="mb-12 flex justify-between items-center"
         >
-          <h2 className="text-3xl font-bold tracking-tight text-white mb-4">
+          
+          <div> <h2 className="text-3xl font-bold tracking-tight text-white mb-4">
             Featured Projects
           </h2>
-          <p className="text-purple-200/60 max-w-2xl">
-            A collection of applications focusing on performance, data visualization, and user experience.
-          </p>
+            <p className="text-purple-200/60 md:w-lg max-w-2xl">
+              A collection of applications focusing on performance, data visualization, and user experience.
+            </p></div>
+          <div className="md:flex hidden">
+            <Link className="text-purple-200/60 hover:text-purple-400" href='/projects'><p className=" flex items-center justify-center max-w-2xl">
+              show more 
+              <ChevronRight />
+            </p></Link>
+          </div>
         </motion.div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -104,6 +112,12 @@ export const Projects = () => {
               </Card>
             </motion.div>
           ))}
+          <div className="md:hidden block">
+            <Link className="text-purple-200/60 hover:text-purple-400" href='/projects'><p className=" flex items-center justify-center max-w-2xl">
+              show more 
+              <ChevronRight />
+            </p></Link>
+          </div>
         </div>
       </div>
     </section>

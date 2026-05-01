@@ -11,7 +11,7 @@ export const Hero = () => {
   const { personal } = portfolioData;
 
   return (
-    <section id="home" className="relative py-20 lg:py-32 overflow-hidden">
+    <section id="home" className="relative dark py-20 lg:py-32 overflow-hidden">
       <div className="container px-4 mx-auto relative z-10">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           <motion.div
