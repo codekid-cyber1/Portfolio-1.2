@@ -102,42 +102,40 @@ export const About = () => {
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      // ── Set initial chapter opacities ──
-      chapterRefs.current.forEach((el, i) => {
-        if (!el) return;
-        gsap.set(el, { opacity: i === 0 ? 1 : 0.3, y: i === 0 ? 0 : 20 });
-      });
-
-      // Initialize chapter 0 visual state
-      animateToChapter(0);
-
-      // ── Per-chapter ScrollTrigger: smoothly activate chapters ──
-      CHAPTERS.forEach((ch, i) => {
-        const el = chapterRefs.current[i];
-        if (!el) return;
-
-        ScrollTrigger.create({
-          trigger: el,
-          start: "top 55%",
-          end: "bottom 45%",
-          onEnter: () => animateToChapter(i),
-          onEnterBack: () => animateToChapter(i),
-          onLeave: () => {
-            if (i < CHAPTERS.length - 1) {
-              gsap.to(el, { opacity: 0.3, duration: 0.4, ease: "power2.out" });
-            }
-          },
-          onLeaveBack: () => {
-            if (i > 0) {
-              gsap.to(el, { opacity: 0.3, duration: 0.4, ease: "power2.out" });
-            }
-          },
-        });
-      });
-
-      // ── GSAP ScrollTrigger Pinning for the Portrait ──
       const mm = gsap.matchMedia();
+
+      // ── Desktop (>= 768px): Interactive GSAP Scrollytelling & Pinned Portrait ──
       mm.add("(min-width: 768px)", () => {
+        chapterRefs.current.forEach((el, i) => {
+          if (!el) return;
+          gsap.set(el, { opacity: i === 0 ? 1 : 0.3, y: i === 0 ? 0 : 20 });
+        });
+
+        animateToChapter(0);
+
+        CHAPTERS.forEach((ch, i) => {
+          const el = chapterRefs.current[i];
+          if (!el) return;
+
+          ScrollTrigger.create({
+            trigger: el,
+            start: "top 55%",
+            end: "bottom 45%",
+            onEnter: () => animateToChapter(i),
+            onEnterBack: () => animateToChapter(i),
+            onLeave: () => {
+              if (i < CHAPTERS.length - 1) {
+                gsap.to(el, { opacity: 0.3, duration: 0.4, ease: "power2.out" });
+              }
+            },
+            onLeaveBack: () => {
+              if (i > 0) {
+                gsap.to(el, { opacity: 0.3, duration: 0.4, ease: "power2.out" });
+              }
+            },
+          });
+        });
+
         if (storyAreaRef.current && pinVisualRef.current) {
           ScrollTrigger.create({
             trigger: storyAreaRef.current,
@@ -149,6 +147,14 @@ export const About = () => {
             invalidateOnRefresh: true,
           });
         }
+      });
+
+      // ── Mobile (< 768px): Clean, compact flow with full readable opacity ──
+      mm.add("(max-width: 767px)", () => {
+        chapterRefs.current.forEach((el) => {
+          if (!el) return;
+          gsap.set(el, { opacity: 1, y: 0, clearProps: "all" });
+        });
       });
 
       function animateToChapter(index: number) {
@@ -215,7 +221,7 @@ export const About = () => {
       style={{ background: "var(--brand-cream-light)" }}
     >
       {/* ── Section label ── */}
-      <div className="container px-4 mx-auto pt-20 pb-6">
+      <div className="container px-4 mx-auto pt-14 pb-4 md:pt-20 md:pb-6">
         <p
           className="text-xs font-bold uppercase tracking-[0.3em]"
           style={{ color: "var(--brand-terracotta)" }}
@@ -231,17 +237,16 @@ export const About = () => {
       </div>
 
       {/* ── Story Area (2-column layout with GSAP pin) ── */}
-      <div ref={storyAreaRef} className="container px-4 mx-auto relative">
+      <div ref={storyAreaRef} className="container px-4 mx-auto relative pb-12 md:pb-24">
         <div className="grid grid-cols-1 md:grid-cols-[1fr_360px] lg:grid-cols-[1fr_420px] gap-8 md:gap-12 lg:gap-16 items-start relative">
 
           {/* LEFT — scrollable chapter cards */}
-          <div className="space-y-[32vh] py-[6vh]">
+          <div className="space-y-10 sm:space-y-12 md:space-y-[28vh] py-3 md:py-[6vh]">
             {CHAPTERS.map((ch, i) => (
               <div
                 key={ch.id}
                 ref={(el) => { chapterRefs.current[i] = el; }}
-                className="transition-none"
-                style={{ minHeight: "55vh" }}
+                className="min-h-0 md:min-h-[50vh] transition-none"
               >
                 {/* Eyebrow */}
                 <p
