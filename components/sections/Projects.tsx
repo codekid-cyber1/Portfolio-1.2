@@ -1,125 +1,402 @@
 "use client";
 
-import { motion } from "motion/react";
-import { portfolioData } from "@/data/portfolio-data";
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/Card";
-import { Badge } from "@/components/ui/Badge";
-import { ChevronRight, ExternalLink, Github } from "lucide-react";
-import { Button } from "@/components/ui/Button";
+import { useState } from "react";
+import { motion, AnimatePresence } from "motion/react";
+import { ExternalLink, Github, ArrowRight, Globe, Lock, ChevronLeft, ChevronRight, Sparkles } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+import { portfolioData } from "@/data/portfolio-data";
+import { LazyProjectMedia } from "@/components/ui/LazyProjectMedia";
+
+const SPOTLIGHT_PROJECTS = portfolioData.projects;
 
 export const Projects = () => {
-  const { projects } = portfolioData;
+  const [activeIndex, setActiveIndex] = useState(0);
+  const activeProject = SPOTLIGHT_PROJECTS[activeIndex];
+
+  const handlePrev = () => {
+    setActiveIndex((prev) => (prev === 0 ? SPOTLIGHT_PROJECTS.length - 1 : prev - 1));
+  };
+
+  const handleNext = () => {
+    setActiveIndex((prev) => (prev === SPOTLIGHT_PROJECTS.length - 1 ? 0 : prev + 1));
+  };
 
   return (
-    <section id="projects" className="py-20 bg-[#0B0714]">
-      <div className="container px-4 mx-auto">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5 }}
-          className="mb-12 flex justify-between items-center"
-        >
-          
-          <div> <h2 className="text-3xl font-bold tracking-tight text-white mb-4">
-            Featured Projects
-          </h2>
-            <p className="text-purple-200/60 md:w-lg max-w-2xl">
-              A collection of applications focusing on performance, data visualization, and user experience.
-            </p></div>
-          <div className="md:flex hidden">
-            <Link className="text-purple-200/60 hover:text-purple-400" href='/projects'><p className=" flex items-center justify-center max-w-2xl">
-              show more 
-              <ChevronRight />
-            </p></Link>
+    <section id="projects" className="py-20 lg:py-28 overflow-x-clip" style={{ background: "var(--brand-cream)" }}>
+      <div className="container px-4 mx-auto max-w-6xl">
+        {/* ── Section Header ── */}
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
+          <div>
+            <p
+              className="text-xs font-bold uppercase tracking-[0.3em] mb-2"
+              style={{ color: "var(--brand-terracotta)" }}
+            >
+              Selected Work
+            </p>
+            <h2
+              className="text-3xl lg:text-4xl font-extrabold tracking-tight"
+              style={{ color: "var(--brand-dark)" }}
+            >
+              Featured Projects
+            </h2>
+            <p
+              className="mt-2 text-sm sm:text-base max-w-xl leading-relaxed"
+              style={{ color: "var(--brand-brown-text)", opacity: 0.8 }}
+            >
+              Interactive showcase of production applications focusing on real-time data, architectural speed, and polished user experiences.
+            </p>
           </div>
-        </motion.div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {projects.map((project, index) => (
-            <motion.div
-              key={project.title}
-              initial={{ opacity: 0, y: 30, scale: 0.95 }}
-              whileInView={{ opacity: 1, y: 0, scale: 1 }}
-              viewport={{ once: true, margin: "-100px" }}
-              transition={{
-                duration: 0.6,
-                delay: index * 0.1,
-                ease: [0.21, 0.47, 0.32, 0.98]
+          <Link
+            href="/projects"
+            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full text-xs font-bold transition-all self-start md:self-auto hover:translate-x-1"
+            style={{
+              background: "rgba(181,82,42,0.08)",
+              border: "1px solid rgba(181,82,42,0.2)",
+              color: "var(--brand-terracotta)",
+            }}
+          >
+            All Projects ({portfolioData.Allprojects.length})
+            <ArrowRight className="w-3.5 h-3.5" />
+          </Link>
+        </div>
+
+        {/* ── Mobile Selector Pills (< lg screens) ── */}
+        <div className="lg:hidden flex items-center justify-between gap-2 mb-6">
+          <div className="flex gap-2 overflow-x-auto pb-2 scrollbar-none flex-1">
+            {SPOTLIGHT_PROJECTS.map((project, idx) => {
+              const isActive = idx === activeIndex;
+              return (
+                <button
+                  key={project.title}
+                  onClick={() => setActiveIndex(idx)}
+                  className={`flex-shrink-0 flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs font-bold transition-all ${
+                    isActive
+                      ? "text-white shadow-sm"
+                      : "text-[#5C3A1E] hover:bg-white/60"
+                  }`}
+                  style={{
+                    background: isActive ? "var(--brand-orange)" : "rgba(255,255,255,0.75)",
+                    border: `1px solid ${isActive ? "var(--brand-orange)" : "rgba(181,82,42,0.15)"}`,
+                  }}
+                >
+                  <span className={isActive ? "text-white/80" : "text-[#B5522A]"}>{project.index}</span>
+                  <span>{project.title}</span>
+                </button>
+              );
+            })}
+          </div>
+
+          {/* Quick cycle arrows on mobile */}
+          <div className="flex items-center gap-1 flex-shrink-0 pl-1">
+            <button
+              onClick={handlePrev}
+              aria-label="Previous Project"
+              className="w-8 h-8 rounded-full flex items-center justify-center border transition-colors hover:bg-white"
+              style={{
+                background: "rgba(255,255,255,0.75)",
+                borderColor: "rgba(181,82,42,0.2)",
+                color: "var(--brand-dark)",
               }}
             >
-              <Card className="h-full flex flex-col group bg-[#130d26]/40 backdrop-blur-sm border-purple-500/20 hover:border-purple-500/50 transition-all duration-300 overflow-hidden hover:scale-[1.02] hover:shadow-2xl hover:shadow-purple-500/10">
-                <div className="relative w-full h-48 overflow-hidden">
-                  <Image
-                    src={(project as any).image}
-                    alt={project.title}
-                    fill
-                    className="object-cover transition-transform duration-500 group-hover:scale-110"
-                    referrerPolicy="no-referrer"
-                    unoptimized={true}
-                  />
-                </div>
-                <CardHeader>
-                  <div className="flex justify-between items-start mb-2">
-                    <CardTitle className="text-xl text-white group-hover:text-purple-400 transition-colors">
-                      {project.title}
-                    </CardTitle>
-                  </div>
-                  <CardDescription className="text-purple-200/60 leading-relaxed mb-4">
-                    {project.description}
-                  </CardDescription>
-
-                  <div className="space-y-4 mb-6">
-                    <div>
-                      <h4 className="text-[10px] uppercase tracking-wider font-bold text-purple-500/60 mb-1">Problem</h4>
-                      <p className="text-sm text-purple-200/50 italic">
-                        {project.problem}
-                      </p>
-                    </div>
-                    <div>
-                      <h4 className="text-[10px] uppercase tracking-wider font-bold text-purple-500/60 mb-1">Solution</h4>
-                      <p className="text-sm text-purple-200/70">
-                        {project.solution}
-                      </p>
-                    </div>
-                  </div>
-                </CardHeader>
-                <CardContent>
-                  <div className="flex flex-wrap gap-2">
-                    {project.techStack.map((tech) => (
-                      <Badge key={tech} variant="secondary" className="bg-purple-500/10 text-purple-300 border-purple-500/20">
-                        {tech}
-                      </Badge>
-                    ))}
-                  </div>
-                </CardContent>
-                <CardFooter className="mt-auto pt-6 flex gap-3">
-                  <Button variant="outline" size="sm" className="flex-1 rounded-lg border-purple-500/20 hover:bg-purple-500/10 hover:text-purple-400" asChild>
-                    <a href={project.links.github} target="_blank" rel="noopener noreferrer">
-                      <Github className="mr-2 h-4 w-4" />
-                      View Code
-                    </a>
-                  </Button>
-                  <Button size="sm" className="flex-1 rounded-lg bg-purple-600 hover:bg-purple-500 text-white" asChild>
-                    <a href={project.links.live} target="_blank" rel="noopener noreferrer">
-                      <ExternalLink className="mr-2 h-4 w-4" />
-                      View Demo
-                    </a>
-                  </Button>
-                </CardFooter>
-              </Card>
-            </motion.div>
-          ))}
-          <div className="md:hidden block">
-            <Link className="text-purple-200/60 hover:text-purple-400" href='/projects'><p className=" flex items-center justify-center max-w-2xl">
-              show more 
-              <ChevronRight />
-            </p></Link>
+              <ChevronLeft className="w-4 h-4" />
+            </button>
+            <button
+              onClick={handleNext}
+              aria-label="Next Project"
+              className="w-8 h-8 rounded-full flex items-center justify-center border transition-colors hover:bg-white"
+              style={{
+                background: "rgba(255,255,255,0.75)",
+                borderColor: "rgba(181,82,42,0.2)",
+                color: "var(--brand-dark)",
+              }}
+            >
+              <ChevronRight className="w-4 h-4" />
+            </button>
           </div>
+        </div>
+
+        {/* ── Main Spotlight Deck Layout ── */}
+        <div className="grid grid-cols-1 lg:grid-cols-[360px_1fr] xl:grid-cols-[380px_1fr] gap-8 items-start">
+
+          {/* LEFT: Project Selector List (Desktop) */}
+          <div className="hidden lg:flex flex-col gap-3">
+            {SPOTLIGHT_PROJECTS.map((project, idx) => {
+              const isActive = idx === activeIndex;
+              return (
+                <button
+                  key={project.title}
+                  onClick={() => setActiveIndex(idx)}
+                  className={`w-full text-left p-4 rounded-2xl transition-all duration-300 relative group cursor-pointer ${
+                    isActive
+                      ? "shadow-md scale-[1.01]"
+                      : "hover:bg-white/60 hover:scale-[1.005]"
+                  }`}
+                  style={{
+                    background: isActive
+                      ? "rgba(255, 255, 255, 0.95)"
+                      : "rgba(255, 255, 255, 0.55)",
+                    border: `1.5px solid ${
+                      isActive ? "var(--brand-orange)" : "rgba(181,82,42,0.12)"
+                    }`,
+                    boxShadow: isActive ? "0 8px 24px rgba(181,82,42,0.12)" : "none",
+                  }}
+                >
+                  {/* Left accent bar on active */}
+                  {isActive && (
+                    <motion.div
+                      layoutId="activeBar"
+                      className="absolute left-0 top-3 bottom-3 w-1.5 rounded-r-full"
+                      style={{ background: "var(--brand-orange)" }}
+                      transition={{ type: "spring", stiffness: 350, damping: 30 }}
+                    />
+                  )}
+
+                  <div className="flex items-center justify-between gap-2 mb-1.5">
+                    <span
+                      className="text-xs font-black tracking-wider uppercase"
+                      style={{ color: isActive ? "var(--brand-orange)" : "var(--brand-terracotta)", opacity: isActive ? 1 : 0.7 }}
+                    >
+                      {project.index}
+                    </span>
+                    <span
+                      className="text-[10px] font-bold px-2 py-0.5 rounded-full"
+                      style={{
+                        background: "rgba(181,82,42,0.08)",
+                        color: "var(--brand-terracotta)",
+                      }}
+                    >
+                      {project.tag}
+                    </span>
+                  </div>
+
+                  <h3
+                    className="text-base font-extrabold leading-snug transition-colors"
+                    style={{
+                      color: isActive ? "var(--brand-dark)" : "rgba(28,16,8,0.8)",
+                    }}
+                  >
+                    {project.title}
+                  </h3>
+
+                  <p
+                    className="text-xs leading-relaxed mt-1 line-clamp-1"
+                    style={{
+                      color: "var(--brand-brown-text)",
+                      opacity: isActive ? 0.9 : 0.65,
+                    }}
+                  >
+                    {project.highlight}
+                  </p>
+                </button>
+              );
+            })}
+
+            {/* Quick footer card */}
+            <div
+              className="mt-2 p-4 rounded-2xl flex items-center justify-between text-xs"
+              style={{
+                background: "rgba(232,112,64,0.06)",
+                border: "1px dashed rgba(181,82,42,0.25)",
+              }}
+            >
+              <div className="flex items-center gap-2">
+                <Sparkles className="w-4 h-4" style={{ color: "var(--brand-orange)" }} />
+                <span className="font-semibold" style={{ color: "var(--brand-dark)" }}>
+                  Looking for more builds?
+                </span>
+              </div>
+              <Link
+                href="/projects"
+                className="font-bold underline hover:opacity-80 transition-opacity"
+                style={{ color: "var(--brand-terracotta)" }}
+              >
+                View Archive →
+              </Link>
+            </div>
+          </div>
+
+          {/* RIGHT: Interactive Browser Preview Deck */}
+          <div
+            className="rounded-3xl border overflow-hidden shadow-xl transition-all"
+            style={{
+              background: "rgba(255, 255, 255, 0.92)",
+              borderColor: "rgba(181, 82, 42, 0.18)",
+              boxShadow: "0 16px 40px rgba(181,82,42,0.08)",
+            }}
+          >
+            {/* Browser Window Header */}
+            <div
+              className="flex items-center justify-between px-4 py-3 border-b"
+              style={{
+                background: "#FAF7F2",
+                borderColor: "rgba(181, 82, 42, 0.12)",
+              }}
+            >
+              {/* Traffic control dots */}
+              <div className="flex items-center gap-1.5">
+                <div className="w-2.5 h-2.5 rounded-full" style={{ background: "#E87040" }} />
+                <div className="w-2.5 h-2.5 rounded-full" style={{ background: "#F59E0B" }} />
+                <div className="w-2.5 h-2.5 rounded-full" style={{ background: "#10B981" }} />
+              </div>
+
+              {/* URL address bar */}
+              <div
+                className="flex items-center gap-1.5 px-3 py-1 rounded-full text-[11px] font-medium tracking-tight max-w-[220px] sm:max-w-xs truncate"
+                style={{
+                  background: "rgba(255, 255, 255, 0.85)",
+                  border: "1px solid rgba(181, 82, 42, 0.15)",
+                  color: "#5C3A1E",
+                }}
+              >
+                <Lock className="w-2.5 h-2.5 flex-shrink-0" style={{ color: "#10B981" }} />
+                <span className="truncate">https://{activeProject.urlHost}</span>
+              </div>
+
+              {/* Live / Code badge */}
+              <div
+                className="flex items-center gap-1.5 text-[11px] font-semibold"
+                style={{ color: activeProject.links.live ? "#16A34A" : "#0284C7" }}
+              >
+                <span
+                  className={`w-2 h-2 rounded-full ${
+                    activeProject.links.live ? "bg-emerald-500 animate-pulse" : "bg-sky-500"
+                  }`}
+                />
+                <span className="hidden sm:inline">
+                  {activeProject.links.live ? "Active" : "Code Showcase"}
+                </span>
+              </div>
+            </div>
+
+            {/* Browser Viewport with AnimatePresence */}
+            <div className="p-4 sm:p-6">
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={activeProject.title}
+                  initial={{ opacity: 0, y: 12 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -12 }}
+                  transition={{ duration: 0.35, ease: "easeOut" }}
+                  className="space-y-5"
+                >
+                  {/* Project Screenshot / Video Showcase Frame */}
+                  <div
+                    className="relative w-full aspect-[16/10] sm:aspect-[16/9] rounded-2xl overflow-hidden border group"
+                    style={{
+                      borderColor: "rgba(181, 82, 42, 0.15)",
+                      background: "#FAF7F2",
+                    }}
+                  >
+                    <LazyProjectMedia
+                      src={activeProject.image}
+                      videoSrc={activeProject.video}
+                      posterSrc={activeProject.poster}
+                      alt={activeProject.title}
+                      aspectRatio="aspect-[16/10] sm:aspect-[16/9]"
+                    />
+
+                    {/* Quick view overlay pill on hover */}
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-4 pointer-events-none">
+                      <span className="inline-flex items-center gap-1.5 text-xs font-bold text-white px-3 py-1.5 rounded-full bg-white/20 backdrop-blur-md">
+                        <Globe className="w-3.5 h-3.5" />
+                        {activeProject.links.live ? "Explore Live Interface" : "Explore Repository"}
+                      </span>
+                    </div>
+                  </div>
+
+                  {/* Project Details Strip */}
+                  <div className="space-y-4">
+                    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                      <div>
+                        <div className="flex items-center gap-2">
+                          <span
+                            className="text-xs font-extrabold uppercase tracking-wider"
+                            style={{ color: "var(--brand-terracotta)" }}
+                          >
+                            {activeProject.index} — {activeProject.tag}
+                          </span>
+                        </div>
+                        <h4
+                          className="text-xl sm:text-2xl font-black tracking-tight mt-0.5"
+                          style={{ color: "var(--brand-dark)" }}
+                        >
+                          {activeProject.title}
+                        </h4>
+                      </div>
+
+                      {/* Tech stack badges */}
+                      <div className="flex flex-wrap gap-1.5">
+                        {activeProject.techStack.map((tech) => (
+                          <span
+                            key={tech}
+                            className="text-[11px] font-semibold px-2.5 py-1 rounded-full"
+                            style={{
+                              background: "rgba(181,82,42,0.08)",
+                              border: "1px solid rgba(181,82,42,0.18)",
+                              color: "var(--brand-terracotta)",
+                            }}
+                          >
+                            {tech}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+
+                    {/* Summary text */}
+                    <p
+                      className="text-xs sm:text-sm leading-relaxed"
+                      style={{ color: "var(--brand-brown-text)", opacity: 0.88 }}
+                    >
+                      {activeProject.description}
+                    </p>
+
+                    {/* Bottom CTA Action Buttons */}
+                    <div className="pt-2 flex flex-wrap items-center gap-3">
+                      {activeProject.links.live && (
+                        <a
+                          href={activeProject.links.live}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="inline-flex items-center gap-2 px-6 py-2.5 rounded-full text-xs sm:text-sm font-bold text-white transition-all hover:scale-105 shadow-md"
+                          style={{
+                            background: "var(--brand-orange)",
+                            boxShadow: "0 4px 16px rgba(232,112,64,0.35)",
+                          }}
+                        >
+                          Live Demo
+                          <ExternalLink className="w-3.5 h-3.5" />
+                        </a>
+                      )}
+
+                      {activeProject.links.github && (
+                        <a
+                          href={activeProject.links.github}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="inline-flex items-center gap-2 px-6 py-2.5 rounded-full text-xs sm:text-sm font-semibold transition-all hover:scale-105 shadow-sm"
+                          style={{
+                            background: activeProject.links.live ? "rgba(255,255,255,0.7)" : "var(--brand-orange)",
+                            border: `1px solid ${activeProject.links.live ? "rgba(181,82,42,0.25)" : "transparent"}`,
+                            color: activeProject.links.live ? "var(--brand-dark)" : "#FFFFFF",
+                            boxShadow: activeProject.links.live ? "none" : "0 4px 16px rgba(232,112,64,0.35)",
+                          }}
+                        >
+                          <Github className="w-3.5 h-3.5" />
+                          Source Code
+                        </a>
+                      )}
+                    </div>
+                  </div>
+                </motion.div>
+              </AnimatePresence>
+            </div>
+          </div>
+
         </div>
       </div>
     </section>
   );
 };
+

@@ -17,8 +17,15 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`${inter.variable} scroll-smooth dark`}>
-      <body className="bg-[#0B0714] text-slate-50 antialiased font-sans" suppressHydrationWarning>
+    <html lang="en" className={`${inter.variable} scroll-smooth`}>
+      <head>
+        <link rel="preconnect" href="https://res.cloudinary.com" crossOrigin="anonymous" />
+        <link rel="dns-prefetch" href="https://res.cloudinary.com" />
+      </head>
+      <body
+        className="antialiased font-sans"
+        suppressHydrationWarning
+      >
         {children}
       </body>
     </html>

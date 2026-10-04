@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { motion, AnimatePresence, useScroll, useMotionValueEvent } from "motion/react";
 import { cn } from "@/lib/utils";
 import { User, Briefcase, FileText, Mail, Home } from "lucide-react";
@@ -13,17 +13,11 @@ export const FloatingNav = () => {
 
   useMotionValueEvent(scrollY, "change", (current) => {
     if (typeof current !== "number") return;
-
     const direction = current - lastScrollY;
-
     if (current < 50) {
       setVisible(true);
     } else {
-      if (direction > 0) {
-        setVisible(false);
-      } else {
-        setVisible(true);
-      }
+      setVisible(direction <= 0);
     }
     setLastScrollY(current);
   });
@@ -40,51 +34,52 @@ export const FloatingNav = () => {
     e.preventDefault();
     const targetId = link.replace("#", "");
     const elem = targetId ? document.getElementById(targetId) : document.body;
-    elem?.scrollIntoView({
-      behavior: "smooth",
-    });
+    elem?.scrollIntoView({ behavior: "smooth" });
   };
 
   return (
     <AnimatePresence mode="wait">
       <motion.div
-        initial={{
-          opacity: 0,
-          y: -100,
-        }}
+        initial={{ opacity: 0, y: -100 }}
         animate={{
           y: visible ? 0 : -100,
           opacity: visible ? 1 : 0,
         }}
-        transition={{
-          type: "spring",
-          stiffness: 260,
-          damping: 20,
-        }}
+        transition={{ type: "spring", stiffness: 260, damping: 20 }}
         className={cn(
-          "flex max-w-fit fixed top-10 inset-x-0 mx-auto border border-purple-500/20 rounded-full bg-[#130d26]/80 backdrop-blur-md shadow-[0px_2px_3px_-1px_rgba(0,0,0,0.1),0px_1px_0px_0px_rgba(25,28,33,0.02),0px_0px_0px_1px_rgba(25,28,33,0.08)] z-[5000] pr-2 pl-8 py-2 items-center justify-center space-x-4"
+          "flex max-w-fit fixed top-5 sm:top-6 inset-x-0 mx-auto rounded-full z-[5000] pr-2 pl-6 sm:pl-8 py-2 items-center justify-center space-x-3 sm:space-x-4 border backdrop-blur-md shadow-lg"
         )}
+        style={{
+          background: "rgba(250, 247, 242, 0.88)",
+          borderColor: "rgba(181, 82, 42, 0.18)",
+          boxShadow: "0 4px 30px rgba(181, 82, 42, 0.08)",
+        }}
       >
-        {navItems.map((navItem: any, idx: number) => (
+        {navItems.map((navItem, idx) => (
           <Link
             key={`link=${idx}`}
             href={navItem.link}
             onClick={(e) => handleScroll(e, navItem.link)}
             className={cn(
-              "relative text-purple-200/70 items-center flex space-x-1 hover:text-purple-400 transition-colors"
+              "relative items-center flex space-x-1 text-sm font-medium transition-colors"
             )}
+            style={{ color: "var(--brand-brown-text)" }}
           >
             <span className="block sm:hidden">{navItem.icon}</span>
-            <span className="hidden sm:block text-sm font-medium">{navItem.name}</span>
+            <span className="hidden sm:block">{navItem.name}</span>
           </Link>
         ))}
         <a
-          href="/cv.pdf"
-          download
-          className="group relative inline-flex items-center justify-center px-6 py-2 font-medium text-white transition-all duration-200 bg-gradient-to-r from-purple-700 to-purple-500 rounded-full hover:from-purple-600 hover:to-purple-400"
+          href="/Abdulmujeeb_Awodi.pdf"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="group relative inline-flex items-center justify-center px-6 py-2 font-semibold text-white text-sm transition-all duration-200 rounded-full"
+          style={{
+            background: "var(--brand-orange)",
+            boxShadow: "0 4px 16px rgba(232,112,64,0.3)",
+          }}
         >
-          <span className="relative z-10">Hire Me</span>
-          <span className="absolute inset-0 rounded-full bg-purple-500/20 blur-md group-hover:blur-lg transition-all opacity-0 group-hover:opacity-100" />
+          <span className="relative z-10">Resume</span>
         </a>
       </motion.div>
     </AnimatePresence>

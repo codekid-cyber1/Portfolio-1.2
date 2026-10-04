@@ -1,60 +1,66 @@
 @import "tailwindcss";
 
 @layer base {
-  html {
+  html, body {
+    margin: 0;
+    padding: 0;
     scroll-behavior: smooth;
-  }
-  :root {
-    --background: 0 0% 100%;
-    --foreground: 240 10% 3.9%;
-    --card: 0 0% 100%;
-    --card-foreground: 240 10% 3.9%;
-    --popover: 0 0% 100%;
-    --popover-foreground: 240 10% 3.9%;
-    --primary: 240 5.9% 10%;
-    --primary-foreground: 0 0% 98%;
-    --secondary: 240 4.8% 95.9%;
-    --secondary-foreground: 240 5.9% 10%;
-    --muted: 240 4.8% 95.9%;
-    --muted-foreground: 240 3.8% 46.1%;
-    --accent: 240 4.8% 95.9%;
-    --accent-foreground: 240 5.9% 10%;
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 0 0% 98%;
-    --border: 240 5.9% 90%;
-    --input: 240 5.9% 90%;
-    --ring: 240 5.9% 10%;
-    --radius: 0.5rem;
+    overflow-x: hidden;
+    max-width: 100vw;
   }
 
-  .dark {
-    --background: 240 10% 3.9%;
-    --foreground: 0 0% 98%;
-    --card: 240 10% 3.9%;
-    --card-foreground: 0 0% 98%;
-    --popover: 240 10% 3.9%;
-    --popover-foreground: 0 0% 98%;
-    --primary: 0 0% 98%;
-    --primary-foreground: 240 5.9% 10%;
-    --secondary: 240 3.7% 15.9%;
-    --secondary-foreground: 0 0% 98%;
-    --muted: 240 3.7% 15.9%;
-    --muted-foreground: 240 5% 64.9%;
-    --accent: 240 3.7% 15.9%;
+  :root {
+    /* Warm cream / terracotta palette */
+    --background: 40 33% 96%;
+    --foreground: 25 30% 15%;
+    --card: 38 40% 98%;
+    --card-foreground: 25 30% 15%;
+    --popover: 38 40% 98%;
+    --popover-foreground: 25 30% 15%;
+    --primary: 20 60% 40%;
+    --primary-foreground: 0 0% 98%;
+    --secondary: 38 25% 92%;
+    --secondary-foreground: 25 30% 20%;
+    --muted: 38 20% 90%;
+    --muted-foreground: 25 15% 45%;
+    --accent: 22 70% 50%;
     --accent-foreground: 0 0% 98%;
-    --destructive: 0 62.8% 30.6%;
+    --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 0 0% 98%;
-    --border: 240 3.7% 15.9%;
-    --input: 240 3.7% 15.9%;
-    --ring: 240 4.9% 83.9%;
+    --border: 35 20% 85%;
+    --input: 35 20% 85%;
+    --ring: 22 70% 50%;
+    --radius: 0.75rem;
+
+    /* Brand tokens */
+    --brand-cream: #F5F0E8;
+    --brand-cream-light: #FAF7F2;
+    --brand-terracotta: #B5522A;
+    --brand-orange: #E87040;
+    --brand-dark: #1C1008;
+    --brand-brown-text: #5C3A1E;
+    --brand-border: rgba(181, 82, 42, 0.15);
   }
 }
 
 @layer base {
   * {
-    @apply border-purple-500/20;
+    box-sizing: border-box;
+    border-color: var(--brand-border);
   }
+
+  html, body {
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+    max-width: 100vw;
+  }
+
   body {
-    @apply bg-[#0B0714] text-slate-50 antialiased;
+    background-color: var(--brand-cream);
+    color: var(--brand-dark);
+    font-family: var(--font-sans), system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
 }
